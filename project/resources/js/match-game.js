@@ -4,7 +4,9 @@ var MatchGame = {};
   Sets up a new game after HTML document has loaded.
   Renders a 4x4 board of cards.
 */
-
+$(document).ready(function(){
+	MatchGame.renderCards(MatchGame.generateCardValues(), $('#game'));
+});
 /*
   Generates and returns an array of matching card values.
  */
@@ -27,8 +29,6 @@ MatchGame.generateCardValues = function () {
 		j++;
 	}
 	
-	console.log(randArray);
-	
 	return randArray;
 };
 
@@ -38,7 +38,27 @@ MatchGame.generateCardValues = function () {
 */
 
 MatchGame.renderCards = function(cardValues, $game) {
-
+	$game.empty();
+	var colorArray = [
+	'hsl(25,85%,65%)', 
+	'hsl(55,85%,65%)', 
+	'hsl(90,85%,65%)',
+	'hsl(160,85%,65%)',
+	'hsl(220,85%,65%)',
+	'hsl(265,85%,65%)',
+	'hsl(310,85%,65%)',
+	'hsl(360,85%,65%)']
+	
+	for (var i = 0; i < cardValues.length; i++){
+		var $cardObject = $("<div class='col-md-3 card'></div>");
+		var data = {
+			flipped:false,
+			value:cardValues[i],
+			color:colorArray[cardValues[i] - 1]
+		};
+		$cardObject.data(data);
+		$game.append($cardObject);
+	}
 };
 
 /*
